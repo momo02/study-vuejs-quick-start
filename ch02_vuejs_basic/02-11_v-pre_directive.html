@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>02-11</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- v-pre 디렉티브 : 템플릿 문자열을 컴파일하지 않고 그대로 내보내기 위해 사용. 
+         v-pre 디렉티브로 인해 {{message}} 문자열을 그대로 출력. 
+    -->
+    <div id="example">
+        <span v-pre>{{message}}</span>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#example",
+            data: {
+                message: "Hello World"
+            }
+        })
+    </script>
+</body>
+
+</html>

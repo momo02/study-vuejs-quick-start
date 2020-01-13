@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>02-03</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<!-- v-bind는 요소(Element)의 콘텐트 영역(시작 태그와 종료 태그 사이의 영역)을 설정하는 것이 아닌, 요소 객체의 속성들을 바인딩하기 위해 사용 -->
+<!-- v-bind:src 에서 v-bind를 생략하고 :src와 같이 작성해도 된다. -->
+
+<body>
+    <div id="simple">
+        <!--<input id="a" type="text" v-bind:value="message">-->
+        <input id="a" type="text" :value="message">
+        <br />
+        <!--<img v-bind:src="imagePath" />-->
+        <img :src="imagePath" />
+    </div>
+
+    <script type="text/javascript">
+        var model = {
+            message: 'v-bind 디렉티브',
+            imagePath: "http://sample.bmaster.kro.kr/photos/61.jpg"
+        };
+
+        var simple = new Vue({
+            el: '#simple',
+            data: model
+        })
+    </script>
+</body>
+
+</html>

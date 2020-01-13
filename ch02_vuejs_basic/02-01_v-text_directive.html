@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>02-01</title>
+</head>
+
+<body>
+    <!-- v-text, {{ }} : innerText 속성에 연결됨. 태그 문자열을 HTML 인코딩하여 나타내기 때문에 화면에는 태그 문자열이 그대로 나타남. -->
+
+    <!-- <div id="simple">
+         <h2>{{message}}</h2>
+       </div> -->
+    <div id="simple">
+        <h2 v-text="message"></h2>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script type="text/javascript">
+        var model = {
+            message: '첫번째 Vue.js 앱 입니다!'
+        };
+
+        var simple = new Vue({
+            el: '#simple',
+            data: model
+        })
+    </script>
+</body>
+
+</html>

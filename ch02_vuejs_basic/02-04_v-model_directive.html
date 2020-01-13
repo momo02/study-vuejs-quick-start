@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>02-04</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<!--  v-text / v-html / v-bind 디렉티브들은 모두 단방향 디렉티브 (HTML요소에서 값을 변경하더라도 모델 객체의 값이 바뀌지 않는다.)
+      요소에서 변경된 값이 모델 객체에 반영되기를 원할 때, 즉 [양방향 데이터 바인딩]이 필요한 경우 v-model 디렉티브를 사용한다.
+
+    - v-model 디렉티브는 몇 가지 수식어(Modifier)를 지원. 수식어는 디렉티브에 특별한 기능을 추가하는 Vue.js 디렉티브의 문법 요소. 
+      * lazy : 입력폼에서 이벤트가 발생할 때 입력한 값을 데이터와 동기화. 입력 후 포커스가 이동하거나 할 때 데이터 옵션값이 변경됨. 
+      * number : 숫자가 입력될 경우 number 타입의 값으로 자동 형변환. 
+      * trim : 문자열의 앞,뒤 공백을 자동으로 제거.
+-->
+
+<body>
+    <div id="simple">
+        <input type="text" v-model="name" placeholder="이름을 입력하세요" /> <br />
+        <input type="text" v-model.lazy="name_lazy" placeholder="lazy modifier 적용" /> <br />
+        <input type="text" v-model.number="name_number" placeholder="number modifier 적용" /> <br />
+        <input type="text" v-model.trim="name_trim" placeholder="trim modifier 적용" /> <br />
+        <br /> 입력된 이름 :
+        <h2 v-html="name"></h2>
+        <h2 v-html="name_lazy"></h2>
+        <h2 v-html="name_number"></h2>
+        <h2 v-html="name_trim"></h2>
+    </div>
+    <script type="text/javascript">
+        var twoway = new Vue({
+            el: '#simple',
+            data: {
+                name: '',
+                name_lazy: '',
+                name_number: '',
+                name_trim: ''
+            }
+        })
+    </script>
+</body>
+
+</html>
