@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>03-08</title>
+    <style>
+        #list {
+            width: 400px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        #list td,
+        #list th {
+            border: 1px solid black;
+            text-align: center;
+        }
+        
+        #list>thead>tr {
+            color: yellow;
+            background-color: purple;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<!--
+    # v-cloak 디렉티브
+    가끔 v-for 디렉티브를 이용해 많은 데이터를 출력하거나 할 때에 콧수염 표현식{{ }}이 화면에 일시적으로 나타나는 경우가 있음.
+    이것은 Vue 인스턴스가 el 옵션의 템플릿을 컴파일할 때 발생하는 시간 때문에 일어나는 현상.
+    v-cloak 디렉티브를 사용하면 화면 초기에 컴파일되지 않은 템플릿은 나타나지 않도록 할 수 있다. 
+    아래 코드는 예제 03_09에 v-cloak 디렉티브만 적용한 예제.
+-->
+
+<body>
+    <div id="example" v-cloak>
+        <p>
+            이름 : <input type="text" v-model="name" placeholder="두글자 이상을 입력하세요" />
+        </p>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="contact in contactlist">
+                    <td>{{contact.no}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#example',
+            data: {
+                name: "",
+                isProcessing: false,
+                contactlist: []
+            },
+            watch: {
+                name: function(val) {
+                    if (val.length >= 2) {
+                        this.fetchContacts();
+                    } else {
+                        this.contactlist = [];
+                    }
+                }
+            },
+            methods: {
+                fetchContacts: _.debounce(function() {
+                    this.contactlist = [];
+                    this.isProcessing = true;
+                    var url = "http://sample.bmaster.kro.kr/contacts_long/search/" + this.name;
+                    var vm = this;
+                    fetch(url)
+                        .then(function(response) {
+                            return response.json()
+                        }).then(function(json) {
+                            vm.contactlist = json;
+                            vm.isProcessing = false;
+                        }).catch(function(ex) {
+                            console.log('parsing failed', ex);
+                            vm.contactlist = [];
+                            vm.isProcessing = false;
+                        })
+
+                }, 300)
+            }
+        })
+    </script>
+</body>
+
+</html>

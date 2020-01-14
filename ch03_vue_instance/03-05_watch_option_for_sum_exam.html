@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>03-05</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        x : <input type='text' v-model="x" /><br /> y : <input type='text' v-model="y" /><br /> 덧셈 결과 : {{sum}}
+    </div>
+    <script type="text/javascript">
+        /*  watched Property(관찰 속성)
+            - 주로 긴 처리 시간이 필요한 비동기 처리에 적합. 
+            - watch 옵션을 이용해 관찰 속성을 등록. 등록되는 것은 속성의 이름과 해당 속성이 변경되었을 때 호출할 함수. 
+            함수는 인자를 전달받는데, 이것은 변경된 속성의 값.
+            - 단점 : 값이 바뀔 때마다 매번 함수가 호출된다.
+        */
+        var vm = new Vue({
+            el: "#example",
+            data: {
+                x: 0,
+                y: 0,
+                sum: 0
+            },
+            watch: {
+                x: function(v) {
+                    console.log('## x 변경')
+                    console.log('## 변경된 x 값 : ' + v)
+                    var result = Number(v) + Number(this.y);
+                    if (isNaN(result)) this.sum = 0;
+                    else this.sum = result;
+                },
+                y: function(v) {
+                    console.log('## y 변경')
+                    console.log('## 변경된 y 값 : ' + v)
+                    this.y = v;
+                    var result = Number(this.x) + Number(v);
+                    if (isNaN(result)) this.sum = 0;
+                    else this.sum = result;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

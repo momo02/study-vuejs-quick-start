@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>03-08</title>
+    <style>
+        #list {
+            width: 400px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        #list td,
+        #list th {
+            border: 1px solid black;
+            text-align: center;
+        }
+        
+        #list>thead>tr {
+            color: yellow;
+            background-color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="example">
+        <p>
+            이름 : <input type="text" v-model="name" placeholder="두글자 이상을 입력하세요" />
+        </p>
+        <table id="list">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody id="contacts">
+                <tr v-for="contact in contactlist">
+                    <td>{{contact.no}}</td>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.tel}}</td>
+                    <td>{{contact.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-show="isProcessing === true">조회중</div>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+    <!--  es6-promise는 IE 브라우저에서 Promise객체를 이용하기 위한 폴리필
+         cf. polyfill은 특정 기능이 지원되지 않는 하위 버전의 브라우저를 위해 사용할 수 있도록 만든 플러그인. -->
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#example',
+            data: {
+                name: "",
+                isProcessing: false,
+                contactlist: []
+            },
+            watch: {
+                name: function(val) { //name속성의 변화를 감지하여 함수 호출 
+                    if (val.length >= 2) { //두 자 이상 입력되면 fetchContacts() 함수 호출
+                        this.fetchContacts();
+                    } else {
+                        this.contactlist = [];
+                    }
+                }
+            },
+            methods: {
+                //타이핑을 할 때마다 매번 API를 호출하는 것은 비효율적으모로 ladash 라이브러리의 _.debounce()함수를 이용해
+                //일정 시간(300ms)이 지나도록 연속적인 호출이 일어나지 않으면 실제 API를 요청하도록 함.
+                fetchContacts: _.debounce(function() {
+                    this.contactlist = []; //초기화
+                    this.isProcessing = true; //조회중 div 보이도록
+                    var url = "http://sample.bmaster.kro.kr/contacts_long/search/" +
+                        this.name;
+                    var vm = this;
+                    // fetch 메서드의 리턴값은 promise객체. 
+                    // promise객체는 비동기 처리를 위해 주로 사용, fetch()가 호출되고 나서 서버로부터 응답이 오면 .then()에 인자로 전달한 함수가 실행됨
+                    fetch(url)
+                        .then(function(response) {
+                            return response.json()
+                        }).then(function(json) { //서버로부터 응답이 온 후에 Vue객체의 contactlist 속성을 변경. 
+                            vm.contactlist = json;
+                            vm.isProcessing = false;
+                        }).catch(function(ex) {
+                            console.log('parsing failed', ex);
+                            vm.contactlist = [];
+                            vm.isProcessing = false;
+                        })
+
+                }, 300)
+            }
+        })
+    </script>
+</body>
+<!-- 이 예제는 계산형 속성 Computed Property 로 구현할 수 없음. 
+계산형 속성은 값을 직접 리턴해야 하기 때문. 따라서 [동기적 처리]만 수행할 수 있음. 
+비동기 처리가 필요한 경우라면 관찰 속성을 사용하거나 이벤트 처리 방법을 적용.
+-->
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>03-02</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="example">
+        금액 : <span>{{amount}}원</span>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#example",
+            data: {
+                amt: 1234567
+            },
+            computed: {
+                amount: {
+                    get: function() {
+                        var s = new String("" + this.amt); //숫자를 문자로 변환.
+                        var result = "";
+                        var num = 0;
+                        for (var i = s.length - 1; i >= 0; i--) { //맨 뒷자리부터 하나씩 문자를 result 변수에 붙이면서 3자리 마다 한번씩 콤마 붙이기.
+                            result = s[i] + result;
+                            if (num % 3 == 2 && i !== 0)
+                                result = "," + result;
+                            num++;
+                        }
+                        return result;
+                    },
+                    set: function(amt) {
+                        if (typeof(amt) === "string") { //문자열을 입력받으면 
+                            var result = parseInt(amt.replace(/,/g, "")) //콤마를 제거한 뒤 숫자 값으로 변환하여 amt데이터 속성에 할당.
+                            if (isNaN(result)) this.amt = 0;
+                            else this.amt = result;
+                        } else if (typeof(amt) === "number")
+                            this.amt = amt;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

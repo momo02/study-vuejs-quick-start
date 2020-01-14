@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>03-01</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+      - Vue 인스턴스 
+      var vm = new Vue({ .. }) 와 같이 Vue생성자로 만든 객체를 vue 인스턴스라 한다. 
+      때로는 뷰모델(ViewModel)을 의미하는 vm을 삽입해서 vue vm 인스턴스라고도 한다. 
+      
+      Vue 인스턴스를 생성할 때 전달하는 속성들을 담은 객체를 옵션(options) 객체라 부름.
+          var vm = new Vue({
+              el: "#test",
+              data: model
+          })   
+          에서 아래 부분이 옵션 객체 
+          {
+              el: "#test",
+              data: model
+          } 
+  -->
+    <div id="test">
+        {{name}}
+    </div>
+    <script type="text/javascript">
+        var model = {
+            name: "홍길동"
+        }
+        var vm = new Vue({
+            el: "#test",
+            data: model
+        })
+    </script>
+</body>
+
+</html>
