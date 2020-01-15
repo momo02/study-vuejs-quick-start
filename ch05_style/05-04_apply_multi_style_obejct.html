@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>05-04</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 스타일 객체를 사용할 때 한 번에 여러 개의 스타일 객체를 바인딩할 수도 있다. 
+    myColor,myLayout 스타일 객체를 배열 구조를 이용해 적용.
+    -->
+    <div id="example">
+        <button id="btn1" v-bind:style="[myColor,myLayout]">버튼1</button>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#example",
+            data: {
+                myColor: {
+                    backgroundColor: 'purple',
+                    color: 'yellow'
+                },
+                myLayout: {
+                    width: '150px',
+                    height: '80px',
+                    textAlign: 'center'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
