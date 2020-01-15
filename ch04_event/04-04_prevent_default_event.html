@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>04-04</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #example {
+            height: 98vh;
+            min-height: 100%;
+            padding: 5px
+        }
+    </style>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- contextmenu 이벤트가 발생할 때 ctxStop 메서드를 호출 -->
+    <!-- <div id="example" v-on:contextmenu="ctxStop"> -->
+    <!-- contextmenu.prevent -> 이벤트 수식어(Event Modifier) 적용. e.preventDefault()를 작성하지 않아도 됨. -->
+    <div id="example" v-on:contextmenu.prevent="ctxStop">
+        <a href="https://facebook.com" @click="confirmFB">페이스북</a>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#example",
+            methods: {
+                ctxStop: function(e) {
+                    // e.preventDefault(); //기본 이벤트 제거 -> 내장 컨텍스트 메뉴가 나타나지 않게 됨.
+                },
+                confirmFB: function(e) {
+                    if (!confirm("페이스북으로 이동할까요?")) { //취소
+                        e.preventDefault();
+                        // <a>요소의 기본 이벤트는 href 속성의 URL로 이동시키는 것이지만,
+                        // 이벤트 객체가 제공하는 preventDefault() 메서드를 호출하여 기본 이벤트(Default Event)의 실행을 막음.
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
