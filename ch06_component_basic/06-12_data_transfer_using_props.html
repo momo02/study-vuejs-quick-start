@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>06-12</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<!-- 부모 컴포넌트에서 자식 컴포넌트로 필요한 정보를 전달하기 위해서는 속성(props)을 이용. 
+     부모에서 자식으로 단방향으로만 전달할 수 있다.
+-->
+
+<template id="listTemplate">
+    <li>{{message}}</li>
+</template>
+<script type="text/javascript">
+    Vue.component('list-component', {
+        template: '#listTemplate',
+        props: ['message']
+    })
+</script>
+
+<body>
+    <div id="app">
+        <ul>
+            <!-- props(속성)을 통해서 정보를 전달하기 위해서는 컴포넌트를 사용할 때 attribute처럼 전달. -->
+            <list-component message="Hello"></list-component>
+            <list-component message="씬짜오"></list-component>
+            <list-component message="니하오마"></list-component>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.devtools = true;
+    var vm = new Vue({
+        el: "#app"
+    })
+</script>
+
+</html>

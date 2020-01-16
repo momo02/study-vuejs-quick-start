@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>06-13</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+
+<!-- 컴포넌트 작성시 속성명을 부여할 때 카멜 표기법(camel casing)을 사용했다면 (ex.myMessage) 
+     태그에서 속성명을 사용할 정보를 전달할 때는 반드시 케밥 표기법(kebob casing)을 사용 (ex.my-message)
+     * 태그 작성시 특성(attribute)는 대소문자를 구분하지 않기 때문.
+-->
+
+<template id="listTemplate">
+    <li>{{myMessage}}</li>
+</template>
+<script type="text/javascript">
+    Vue.component('list-component', {
+        template: '#listTemplate',
+        props: ['myMessage']
+    })
+</script>
+
+<body>
+    <div id="app">
+        <ul>
+            <list-component my-message="Hello"></list-component>
+            <list-component my-message="씬짜오"></list-component>
+            <list-component my-message="니하오마"></list-component>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.devtools = true;
+    var vm = new Vue({
+        el: "#app"
+    })
+</script>
+
+</html>
