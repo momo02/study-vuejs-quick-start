@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>06-04</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<!-- 아래의 템플릿 문자열은 템플릿 내부에 루트 요소가 2개이므로 정상적으로 렌더링되지 않는다.-->
+<template id="helloTemplate1">
+    <div>hello</div>
+    <div>world</div>
+</template>
+<!-- 정상적으로 렌더링되도록 하여면 다음과 같이 <div>요소 등으로 감싸서 루트 요소가 하나가 되도록 해야 한다.-->
+<template id="helloTemplate2">
+    <div>
+        <div>hello</div>
+        <div>world</div>
+    </div>
+</template>
+
+<script type="text/javascript">
+    Vue.component('hello-component1', {
+        template: '#helloTemplate1'
+    })
+
+    Vue.component('hello-component2', {
+        template: '#helloTemplate2'
+    })
+</script>
+
+<body>
+    <div id="app">
+        <hello-component1></hello-component1>
+        <hello-component2></hello-component2>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.devtools = true;
+    var v = new Vue({
+        el: '#app'
+    })
+</script>
+
+</html>

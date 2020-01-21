@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>06-11</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<template id='timeTemplate'>
+    <div>
+        <span>{{nowTS}}</span>
+        <button v-on:click="timeClick">현재 시간</button>
+    </div>
+</template>
+<script type="text/javascript">
+    var data = {
+        nowTS: 0
+    };
+    Vue.component('time-component', {
+        template: '#timeTemplate',
+        data: function() {
+            return data; //전역 변수를 할당 
+        },
+        methods: {
+            timeClick: function(e) {
+                this.nowTS = (new Date()).getTime();
+            }
+        }
+    })
+</script>
+<!-- data옵션에서 함수 리턴 값으로 전역 변수를 할당했기때문에
+     동일한 컴포넌트를 여러 번 사용하더라도 데이터 옵션은 모두 동일한 객체를 참조하게 된다.
+    '현재 시간' 버튼 중 하나를 클릭해도 모든 컴포넌트 정보가 동일하게 바뀐다. 
+    이러한 이유로 Vue 컴포넌트에서의 데이터 옵션에 함수를 지정할 때, 리턴값은 반드시 함수 내부에서 선언된 객체여야 한다.
+-->
+
+<body>
+    <div id="app">
+        <time-component></time-component>
+        <time-component></time-component>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.devtools = true;
+    var v = new Vue({
+        el: '#app'
+    })
+</script>
+
+</html>

@@ -11,12 +11,12 @@
 -->
 
 <template id="listTemplate">
-    <li>{{message}}</li>
+    <li>{{idx}} {{message}}</li>
 </template>
 <script type="text/javascript">
     Vue.component('list-component', {
         template: '#listTemplate',
-        props: ['message']
+        props: ['idx', 'message']
     })
 </script>
 
@@ -24,9 +24,9 @@
     <div id="app">
         <ul>
             <!-- props(속성)을 통해서 정보를 전달하기 위해서는 컴포넌트를 사용할 때 attribute처럼 전달. -->
-            <list-component message="Hello"></list-component>
-            <list-component message="씬짜오"></list-component>
-            <list-component message="니하오마"></list-component>
+            <list-component idx="1" message="Hello"></list-component>
+            <list-component idx="2" message="씬짜오"></list-component>
+            <list-component idx="3" message="니하오마"></list-component>
         </ul>
     </div>
 </body>

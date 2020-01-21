@@ -1,0 +1,99 @@
+<!-- 
+ # 연락처 조회 Component 예제 (props & event 활용)
+ step03. search-component 작성 (child component)
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>06-21</title>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js"></script>
+</head>
+<!-- contactlist-component 시작 -->
+<style>
+    #list {
+        width: 400px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    
+    #list td,
+    #list th {
+        border: 1px solid black;
+        text-align: center;
+    }
+    
+    #list>thead>tr {
+        color: yellow;
+        background-color: purple;
+    }
+</style>
+<template id="listTemplate">
+    <div>
+    <table id="list">
+        <thead>
+            <tr>
+                <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
+            </tr>
+        </thead>
+        <tbody id="contacts" >
+            <tr v-for="contact in contacts">
+                <td>{{contact.no}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.tel}}</td>
+                <td>{{contact.address}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</template>
+<script type="text/javascript">
+    Vue.component('contactlist-component', {
+        template: '#listTemplate',
+        props: ['contacts']
+    })
+</script>
+<!-- contactlist-component 끝 -->
+<!-- search-component 시작 -->
+<template id="searchTemplate">
+    <p>     <!-- v-model 디렉티브로 양방향 바인딩하기 위해 name 데이터 옵션 사용 -->
+        이름 : <input type="text" v-model.trim="name" :placeholder="placeholder"
+                @keyup.enter="keyupEvent" /> <!-- 엔터키를 이용한 keyup이벤트가 발생하면 keyupEvent 메서드 호출 -->
+    </p>
+</template>
+<script type="text/javascript">
+    Vue.component('search-component', {
+        template: '#searchTemplate',
+        props: ['placeholder'],
+        data: function() {
+            return {
+                name: ''
+            };
+        },
+        methods: {
+            keyupEvent: function(e) {
+                console.log(e.target.value);
+                var val = e.target.value; //e.target.value : 이벤트가 발생한 요소의 값(여기서는 텍스트 박스에 입력된 값)
+                if (val.length >= 2) {
+                    this.$emit('search', val); //'search'라는 이벤트를 발신.
+                } else {
+                    this.$emit('search', '');
+                }
+            }
+        }
+    })
+</script>
+<!-- search-component 끝 -->
+
+<body>
+
+</body>
+<script type="text/javascript">
+    Vue.config.devtools = true;
+</script>
+
+</html>
