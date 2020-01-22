@@ -38,7 +38,7 @@ Vue.js Quick Start
 
 [inline template 방식을 이용한 컴포넌트 작성 예](ch06_component_basic/06-01~03_component_using_inline_template.html)   
 [`<template>` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-04_component_using_template_tag.html)   
-[`<script type="text/x-template">` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-05_component_using_script_tag.html)
+[`<script type="text/x-template">` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-05_component_using_x-template_script.html)
 
 
 ### 6.3 DOM 템플릿 구문 작성 시 주의 사항
@@ -46,7 +46,7 @@ Vue.js Quick Start
 이 사항을 브라우저가 구문 분석을 수행하는데 Vue 컴포넌트가 사용되면 때때로 오류가 발생하기도 한다.
 
 #### 1. 컴포넌트의 템플릿 문자열로 인해 렌더링 오류가 발생할 수 있다.
-- [컴포넌트의 템플릿 문자열로 인한 렌더링 오류 예](ch06_component_basic/06-06_rendering_error.html) 
+- [컴포넌트의 템플릿 문자열로 인한 렌더링 오류 예](ch06_component_basic/06-06_01_rendering_error.html) 
     - 위 예제에서 `<select>`태그 안에서 <option-component>라는 태그를 사용할 수 있다라는 것이 브라우저에 등록되어 있지 않다. 
       브라우저는 이 태그들을 구문 분석하는 작업을 먼저 수행한 후 Vue컴포넌트를 렌더링하는데 구문 분석 단계에서 DOM 요소가 올바르지 않다고    판단하기때문에 제대로 렌더링하지 못하는 문제가 발생한다.
 
@@ -104,16 +104,16 @@ Vue.js Quick Start
 - 컴포넌트 작성시 속성명을 부여할 때 카멜 표기법(camel casing)을 사용했다면 (ex.myMessage) 
   태그에서 속성명을 사용할 정보를 전달할 때는 반드시 케밥 표기법(kebob casing)을 사용한다. (ex.my-message)   
   태그 작성시 특성(attribute)는 대소문자를 구분하지 않기 때문이다.
-    - [props명에 카멜 표기법을 사용한 경우 data 전달 예](ch06_component_basic/06-13.html)
+    - [props명에 카멜 표기법을 사용한 경우 data 전달 예](ch06_component_basic/06-13_data_transfer_from_parent_to_child_using_props(camel_casing).html)
 - 속성을 정의할 때 속성명을 배열 형태로 나열할 수도 있지만, 속성에 대한 엄격한 유효성 검증이 필요하다면 객체 형태를 사용한다. 
-    - [객체 형태의 props 옵션 사용 예](ch06_component_basic/06-14~15.html)
+    - [객체 형태의 props 옵션 사용 예](ch06_component_basic/06-14~15_props_in_object_type.html)
 - 속성으로 전달할 값이 배열이나 객체인 경우, 기본값(default value)을 부여할때 함수의 리턴값으로 부여하도록한다. (data옵션을 부여할 때 함수의 리턴값으로 부여했던 것과 같은 맥락)   또한 속성값을 전달할 때는 v-bind 디렉티브를 이용한다.
-    - [배열 타입 속성 기본값 적용 예](ch06_component_basic/06-16.html)   
-    - [배열 타입 속성값 전달 예](ch06_component_basic/06-17.html)
+    - [배열 타입 속성 기본값 적용 예](ch06_component_basic/06-16_array_type_prop_defualt_value.html)   
+    - [배열 타입 속성값 전달 예](ch06_component_basic/06-17_array_type_prop_transfer.html)
 
 #### 6.5.2 event를 이용한 정보 전달
 - event를 이용해서 전달하는 방법은 사용자 정의 이벤트를 활용한다. 자식 컴포넌트에서 이벤트를 발신(emit)하고 부모 컴포넌트에서 v-on 디렉티브를 이용해 이벤트를 수신한다. 
-    - [이벤트를 이용한 자식 컴포넌트에서 부모 컴포넌트로의 데이터 전달 예](ch06_component_basic/06-18)
+    - [이벤트를 이용한 자식 컴포넌트에서 부모 컴포넌트로의 데이터 전달 예](ch06_component_basic/06-18_data_transfer_from_child_to_parent_using_event.html)
 
 #### 6.5.3 props와 event 예제
 - 연락처 조회 Component 예제 (props & event 활용)
@@ -136,7 +136,7 @@ Vue.js Quick Start
     - 별도의 데이터 정보를 가지지 않고, 순수하게 이벤트를 통해서 컴포넌트 간의 정보 교환만을 위해서 사용한다.
 - 이벤트를 수신하는 컴포넌트는 미리 이벤트 핸들러를 등록해두어야 한다. 이를 위해 Vue 인스턴스의 생명주기의 created 이벤트 훅을 이용해 Vue인스턴스가 만들어질 때 $on 메서드를 사용해 이벤트 수신 정보를 등록해둔다.
 - 이벤트를 발신하는 컴포넌트에서는 $emit 메서드를 호출한다.
-- [형제 컴포넌트 간 이벤트 버스 객체를 이용한 통신 예](ch06_component_basic/06-24)
+- [형제 컴포넌트 간 이벤트 버스 객체를 이용한 통신 예](ch06_component_basic/06-24_communicate_between_sibling_components_using_event_bus.html)
 
 
 ### 6.7 Todolist 실전 예제
@@ -144,8 +144,8 @@ Vue.js Quick Start
 
     ##### Step01. 기본 틀과 이벤트 버스 객체 작성 [[Step01 코드]](ch06_component_basic/06-25_todoList_exam_with_eventBus_step1.html)
 
-    ##### Step02. 자식 컴포넌트인 contactlist-component 작성 [[Step02 코드]](ch06_component_basic/06-26_todoList_exam_with_eventBus_step2.html)
+    ##### Step02. list-component 작성 [[Step02 코드]](ch06_component_basic/06-26_todoList_exam_with_eventBus_step2.html)
 
-    ##### Step03. 자식 컴포넌트인 search-component 작성 [[Step03 코드]](ch06_component_basic/06-27_todoList_exam_with_eventBus_step3.html)
+    ##### Step03. input-component 작성 [[Step03 코드]](ch06_component_basic/06-27_todoList_exam_with_eventBus_step3.html)
 
-    ##### Step04. 부모 컴포넌트인 search-contact-component 작성 [[Step04 코드]](ch06_component_basic/06-28_todoList_exam_with_eventBus_step4.html)
+    ##### Step04. input-component, list-component 컴포넌트들을 <body> 태그 내부에 적용 [[Step04 코드]](ch06_component_basic/06-28_todoList_exam_with_eventBus_step4.html)

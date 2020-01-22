@@ -106,6 +106,8 @@
     Vue.component('list-component', {
         template: '#list-template',
         created: function() {
+            //addTodo 메서드는 이벤트 버스 객체에 바인딩되어 호출됨.
+            //--> 이벤트 버스 객체에 'add-todo' 이벤트 발생 시, addTodo 메서드를 호출.
             eventBus.$on('add-todo', this.addTodo);
         },
         data: function() {
