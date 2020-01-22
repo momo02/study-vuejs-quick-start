@@ -159,9 +159,9 @@ Vue객체의 el속성은 HTML 요소(element)를 나타낸다. 또한 data속성
 Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 이러이러하게 작동해라 하고 지시를 해주는 지시문이다.  
 #### 2.2.1 v-text, v-html 디렉티브
 - v-text, {{ }} : HTML 요소 객체의 innerText 속성에 연결됨. 태그 문자열을 HTML 인코딩하여 나타내기 때문에 **화면에는 태그 문자열이 그대로 나타남**
-    - [v-text 디렉티브 사용 예](ch02_vuejs_basic\02-01_v-text_directive.html)
+    - [v-text 디렉티브 사용 예](ch02_vuejs_basic/02-01_v-text_directive.html)
 - v-html : HTML 요소 객체의 innerHTML 속성에 연결됨. **태그 문자열을 파싱하여 화면에 나타냄**
-    - [v-html 디렉티브 사용 예](ch02_vuejs_basic\02-02_v-html_directive.html)
+    - [v-html 디렉티브 사용 예](ch02_vuejs_basic/02-02_v-html_directive.html)
 - v-html 디렉티브는 `<script>`태그를 그대로 바인딩하기 때문에 요즘 문제가 되는 XSS(Cross Site Scripting) 공격 등에 취약하다. 꼭 필요한 경우가 아니라면 v-text를 사용하는 것이 더 안전하다.
 
 #### 2.2.2 v-bind 디렉티브
