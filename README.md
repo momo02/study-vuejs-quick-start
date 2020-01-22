@@ -123,7 +123,7 @@ Node.js와 함께 설치되는 npm(node package manager)을 이용해 Vue.js 관
 - Vue CLI를 이용해 프로젝트를 생성할 때는 **vue create '프로젝트폴더명'** 을 이용하거나 **vue ui** 명령을 실행하여 **웹 기반의 'Vue 프로젝트 매니저'화면을 이용해 프로젝트를 생성**할 수 있다. 
 
 ### 1.3 첫 번째 Vue.js 애플리케이션
-[hellovuejs 예제](ch01_first_vuejs_app\01_01_hellovuejs.html)
+[hellovuejs 예제](ch01_first_vuejs_app/01_01_hellovuejs.html)
 
 *****
 ## 02 Vue.js 기초
@@ -264,7 +264,7 @@ Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 �
 - 위 같은 문제를 해결하기 위해서 is 특성(attribute)을 이용한다.
     - [is 특성을 사용하여 렌더링 오류 해결 예](ch06_component_basic/06-07_resolve_redering_error_using_is_attribute.html) 
 
-- [예제06-06](ch06_component_basic/06-06_rendering_error.html)의 18~19행 같은 코드가 `<script type="text/x-template">` 태그 안에서 사용되거나 .vue 확장자를 사용하는 단일 파일 컴포넌트(Single File Component)를   
+- [예제06-06](ch06_component_basic/06-06_01_rendering_error.html)의 18~19행 같은 코드가 `<script type="text/x-template">` 태그 안에서 사용되거나 .vue 확장자를 사용하는 단일 파일 컴포넌트(Single File Component)를   
 작성하는 경우에는 굳이 is 특정을 사용하지 않아도 되지만, `<template>`태그를 사용할 때는 is 특성을 사용해야 한다.
     - [`<script type="text/x-template">` 태그 안에서 사용 예](ch06_component_basic/06-08_resolve_redering_error_using_x-template_script.html) 
 
