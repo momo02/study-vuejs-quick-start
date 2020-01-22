@@ -36,9 +36,9 @@ Vue.js Quick Start
 - template옵션에 적용할 수 있는 값 : 위 예시처럼 인라인 템플릿 방식으로 템플릿 문자열을 직접 지정해도 되지만 (권장하지 않는 방식)
   템플릿 문자열을 포함하고 있는 `<template>`태그, `<script type="text/x-template">` 태그의 id를 지정해도 된다.  
 
-[inline template 방식을 이용한 컴포넌트 작성 예](ch06_component_basic/06-01~03_component_using_inline_template.html)   
-[`<template>` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-04_component_using_template_tag.html)   
-[`<script type="text/x-template">` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-05_component_using_x-template_script.html)
+    - [inline template 방식을 이용한 컴포넌트 작성 예](ch06_component_basic/06-01~03_component_using_inline_template.html)   
+    - [`<template>` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-04_component_using_template_tag.html)   
+    - [`<script type="text/x-template">` 태그를 이용한 컴포넌트 작성 예](ch06_component_basic/06-05_component_using_x-template_script.html)
 
 
 ### 6.3 DOM 템플릿 구문 작성 시 주의 사항
