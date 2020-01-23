@@ -18,7 +18,7 @@ Vue.js Quick Start
         - [2.2.2 v-bind 디렉티브](#222-v-bind-디렉티브)
         - [2.2.3 v-model 디렉티브](#223-v-model-디렉티브)
         - [2.2.4 v-show, v-if, v-else, v-else-if 디렉티브](#224-v-show-v-if-v-else-v-else-if-디렉티브)
-    - [2.3 반복 렌더링 디렉티브](#23-반복-렌더링-디렉티브)
+    - [2.3 v-for 디렉티브 (반복 렌더링 디렉티브)](#23-v-for-디렉티브-반복-렌더링-디렉티브)
     - [2.4 기타 디렉티브](#24-기타-디렉티브)
     - [2.5 계산형 속성](#25-계산형-속성)
 - [03 Vue 인스턴스](#03-vue-인스턴스)
@@ -166,15 +166,51 @@ Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 �
 
 #### 2.2.2 v-bind 디렉티브
 - v-bind는 요소(Element) 객체의 속성들을 바인딩하기 위해 사용한다.
-
-///여기까지 작성 ... 
-
+    - [v-bind 디렉티브 사용 예](ch02_vuejs_basic/02-03_v-bind_directive.html)
+    - v-bind:src --> :src 와 같이 간략하게 작성할 수 있다. 
 
 #### 2.2.3 v-model 디렉티브
+- v-text, v-html, v-bind 디렉티브는 단방향 디렉티브. (HTML요소에서 값을 변경하더라도 모델 객체의 값이 바뀌지 않음)
+    - ![텍스트 필드의 값을 변경하더라도 모델 객체의 속성은 변경되지 않음](readmeImg/02_03_v-bind.PNG)
+- HTML요소에서 변경된 값이 모델 객체에 반영되기를 원할 때, 즉 **[양방향 데이터 바인딩]**이 필요한 경우 v-model 디렉티브를 사용한다.
+    - [v-model 디렉티브 사용 예](ch02_vuejs_basic/02-04_v-model_directive.html)
+
+- v-model 디렉티브는 몇 가지 수식어(Modifier)를 지원. 수식어는 디렉티브에 특별한 기능을 추가하는 Vue.js 디렉티브의 문법 요소.   
+    * lazy : 입력폼에서 이벤트가 발생할 때 입력한 값을 데이터와 동기화. 입력 후 포커스가 이동하거나 할 때 데이터 옵션값이 변경됨. 
+    * number : 숫자가 입력될 경우 number 타입의 값으로 자동 형변환. 
+    * trim : 문자열의 앞,뒤 공백을 자동으로 제거.   
+**사용 예) v-model`.lazy` ="name_lazy"**
+
+
+- v-model 디렉티브는 여러개의 아이템을 선택할 수 있는 `<input type="checkbox"/>` 나 `<select multiple></select>` 에서도 사용 할 수 있고, 모델 객체의 배열 객체와 연결된다.
+    - [사용 예](ch02_vuejs_basic/02-05_v-model_directive_for_mutiple_item.html)
+- 단일 아이템만을 선택할 수 있는 `<input type="radio"/>` 나 `<select></select>`인 경우에는 모델 객체의 단일 값과 연결된다. 
+
 #### 2.2.4 v-show, v-if, v-else, v-else-if 디렉티브
 
-### 2.3 반복 렌더링 디렉티브
+- v-if 디렉티브 : Vue객체의 data속성 값에 따라 렌더링 여부를 결정한다. 조건에 부합되지않으면 렌더링을 하지 않는다. 
+- v-show 디렉티브 : 일단 HTML요소를 렌더링한 후에 display 스타일 속성으로 화면에 보여줄지 여부를 결정한다. 
+    - [v-if, v-show 디렉티브 사용 예](ch02_vuejs_basic/02-06_v-if_v-show_directive.html)
+- **v-if는 조건에 부합하지않으면 아예 렌더링을 하지 않기 때문에 자주 화면이 변경되는 부분에 대해서는 v-if 디렉티브보다는 v-show 디렉티브를 사용하는 것이 바람직** 
+
+- [v-if, v-else, v-else-if 디렉티브 사용 예](ch02_vuejs_basic/02-07_v-if_v-else_v-else-if_directive.html)
+
+### 2.3 v-for 디렉티브 (반복 렌더링 디렉티브)
+- 반복적인 데이터를 렌더링하기 위해 **v-for** 디렉티브를 사용한다. 
+- v-for의 구문은 원본 데이터가 어떤 형식인가에 따라 사용 방법이 달라진다.
+    - 데이터가 배열일 경우 v-for 디렉티브 사용 예 : `<tr v-for="(contact, index) in contacts"> ... </tr>`   
+    [예제 소스](ch02_vuejs_basic/02-08_v-for_directive_for_array_type_data.html)
+    - 데이터가 객체일 경우 v-for 디렉티브 사용 예 : `<option v-for="(val, key, index) in regions"> ... <option>`   
+    [예제 소스](ch02_vuejs_basic/02-09_v-for_directive_for_object_type_data.html)
+- v-for 디렉티브와 v-if 디렉티브는 함께 사용할 수 있다. **주의할 점은 적용 순서인데, v-for 디렉티브가 먼저 수행되고 v-if 디렉티브가 적용된다.**    
+ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('서울') > -1">`` 
+
+- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.    [<template>으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
+
+
+
 ### 2.4 기타 디렉티브
+
 ### 2.5 계산형 속성
 
 

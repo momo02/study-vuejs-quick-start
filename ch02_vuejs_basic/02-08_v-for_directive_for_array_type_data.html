@@ -37,6 +37,7 @@
                 </tr>
             </thead>
             <tbody id="contacts">
+                <!-- <tr v-for="contact in contacts"></tr> -->
                 <tr v-for="(contact, index) in contacts">
                     <td>{{index+1}}</td>
                     <td>{{contact.name}}</td>
@@ -69,6 +70,8 @@
         </table>
     </div>
     <script type="text/javascript">
+        Vue.config.devtools = true;
+
         var model = {
             "pageno": 1,
             "pagesize": 10,
