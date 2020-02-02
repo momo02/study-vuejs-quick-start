@@ -54,6 +54,8 @@ Vue.js Quick Start
         - [6.5.3 props와 event 예제](#653-props와-event-예제)
     - [6.6 이벤트 버스 객체를 이용한 통신](#66-이벤트-버스-객체를-이용한-통신)
     - [6.7 Todolist 실전 예제](#67-todolist-실전-예제)
+- [07 ESMAScript 2015](#07-esmascript-2015)
+    - [7.1 ES2015를 사용하기 위한 프로젝트 설정](#71-es2015를-사용하기-위한-프로젝트-설정)
 
 <!-- /TOC -->
 
@@ -207,7 +209,11 @@ Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 �
 - v-for 디렉티브와 v-if 디렉티브는 함께 사용할 수 있다. **주의할 점은 적용 순서인데, v-for 디렉티브가 먼저 수행되고 v-if 디렉티브가 적용된다.**    
 ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('서울') > -1">`` 
 
+<<<<<<< HEAD
 - 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.
+=======
+- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.    [`<template>`으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
+>>>>>>> 7cc681050fbc613929c688f005fab6513e8bfd6d
 
     - [`<template>`으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
     - `<template>`태그는 렌더링 내용에는 포함되지 않는다. 단지 요소들을 그룹으로 묶어주기 위한 용도로만 사용된다. 
@@ -423,3 +429,82 @@ ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('�
     ##### Step03. input-component 작성 [[Step03 코드]](ch06_component_basic/06-27_todoList_exam_with_eventBus_step3.html)
 
     ##### Step04. input-component, list-component 컴포넌트들을 <body> 태그 내부에 적용 [[Step04 코드]](ch06_component_basic/06-28_todoList_exam_with_eventBus_step4.html)
+    
+
+*****
+## 07 ESMAScript 2015
+----------------------
+- 대규모 앱을 개발하려면 SPA(Single Page Application) 구조라야 하는데, Vue.js 기반의 SPA애플리케이션을 개발하려면 Vue Router, Vuex 등의 다양한 요소가 필요하고 
+이들을 이용하기 위해서는 **ESMAScript 2015(ES2015 = ECMAScript 6 = ES6)** 나 TypeScript 등을 사용해야 한다. 
+
+- ES2015는 최신 브라우저에서만 지원하므로 하위브라우저에서 사용 불가하고 TypeScript는 브라우저에서 직접 실행되지 않는다. 따라서  **트랜스파일러(Transpiler)** 라는 것을 이용해
+ES2015, TypeScript 코드를 구 브라우저에서도 사용할 수 있는 하위버전 자바스크립트로 번역한다.
+
+- 가장 대표적인 트랜스파일러가 Babel, TSC(TypeScript Compiler)이며, Vue CLI는 두 가지 트랜스파일러를 모두 제공한다.
+
+### 7.1 ES2015를 사용하기 위한 프로젝트 설정
+1. Babel을 프로젝트에서 사용하려면 몇가지 설정 필요.   
+프로젝트 생성 후 디렉터리로 이동한다음 npm init 명령을 이용해 package.json파일 생성. 
+![프로젝트 디렉터리 생성](readmeImg/ch07_01.PNG)
+
+2.  VSCode  메뉴 [View] -> [Terminal] 실행. Babel 관련 라이브러리 내려받기.
+(자주 사용되므로 전역으로 설치)   
+`npm install -g babel-cli yarn` (window)   
+`sudo npm install -g babel-cli yarn` (macOS)
+
+3. yarn 설치  
+`npm install -g yarn` (window)   
+
+4. Babel 설치 (생성한 프로젝트 디렉터리에서)
+`yarn add -D babel-cli babel-preset-env babel-preset-stage-2`   
+또는   
+`npm install --save-dev babel-cli -babel-preset-env babel-preset-stage-2`
+
+    - Babel은 개발 중인 경우에만 사용되므로 --save-dev 옵션으로 설치.
+    --save옵션과의 차이는 실행 중에서 사용되는지 여부. Babel 트랜스파일러는 실행 시에 사용하기 위한 것은 아니므로 개발 의존성 패키지로 설치.
+    설치가 완료되고나면 package.json 파일이 변경되고, package-lock.json 파일이 새로 생성된다. 
+
+------ 
+ #### NOTE)  npm , yarn 패키지 와 package.json , package-lock.json 파일
+- npm install, yarn add 명령어는 Node.js 패키지(라이브러리)를 설치할 수 있는 명령어. 설치모드는 크게 4가지
+
+    * `npm install [패키지명1] [패키지명2]`    
+    '로컬모드'로 설치. 현재 디렉터리의 node_modules 디렉터리에 패키지를 설치.
+
+    * `npm install -g [패키지명1] [패키지명2]`   
+    -> -g 옵션은 패키지를 전역(global)에 설치. 전역으로 설치한 패키지는 현재 컴퓨터 내의 모든 프로젝트에서 이용 가능.
+
+    * `npm install --save [패키지명1] [패키지명2]`   
+    --save옵션은 로컬모드와 유사하지만 현재 프로젝트의  package.json에 의존성으로 기록(dependencies). package.json에 의존성이 기록되있으면 다른 컴퓨터에 현재 프로젝트를 이식할 때, 'npm install'명령어로 기록된 의존성 패키지들을 모두 설치 가능.
+
+    * `npm install --save-dev [패키지명1] [패키지명2]`   
+    --save-dev옵션은 로컬모드와 유사하지만 현재 프로젝트의  package.json에 개발 의존성으로 기록(devDependencies). --save옵션과 마찬가지로 'npm install'명령어로 기록된 의존성 패키지들을 모두 설치. 개발 의존성 패키지들은 개발 시에만 사용되고 운영 버전으로 빌드된 이후에는 사용되지 않는다. 개발 의존성으로 설치된 라이브러리들은 npm install 명령어로 설치할때 --production옵션을 주면 설치되지 않음.
+    
+    -> **정리**
+    - **npm install (plugin) --save** : 패키지(plugin)를 ./node_moduels 디렉터리에 설치하고 ./package.json 파일의 **dependencies** 항목에 플러그인 정보가 저장됨.    
+    **--production 빌드시 해당 플러그인이 포함됨.**
+    - **npm install (plugin) --save-dev** : 패키지(plugin)를 ./node_moduels 디렉터리에 설치하고 ./package.json 파일의 **devDependencies** 항목에 플러그인 정보가 저장됨.    
+    **--production 빌드시 해당 플러그인이 포함되지 않음.**
+
+
+- package.json 은 현재 작성하고 있는 애플리케이션, 모듈의 의존성 관리를 위해 사용하는 파일. json형식 준수.
+
+- package-lock.json 파일 : package-lock.json 파일은 npm에 의해서 프로젝트의 node_modules나 package.json이 수정되는 경우 생성되거나 업데이트되며 **당시 의존성에 대한 정보를 모두 가지고 있다.**
+    - 참고 사이트 : [package-lock.json은 왜 필요할까?](https://hyunjun19.github.io/2018/03/23/package-lock-why-need/)
+
+- yarn 패키지는 최근 더 자주 이용되는 패키지. npm보다 실행 속도가 더 빠름.
+
+------ 
+
+6. Babel을 사용하려면 .babelrc 파일을 작성해야 함. 프로젝트 디렉터리에 
+파일을 추가하고    
+` {
+    "presets" : ["env","stage-2"]
+}
+` 와 같이 입력. 사용할 프리셋으로 env, stage-2를 지정한다는 의미.
+
+
+7. 트랜스파일의 수행 여부 확인을 위해 프로젝트 디렉터리에 src디렉터리를 생성하고 07-01.js 파일 작성.
+
+                     
+                                                                                                  
