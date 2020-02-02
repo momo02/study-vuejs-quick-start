@@ -209,12 +209,7 @@ Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 �
 - v-for 디렉티브와 v-if 디렉티브는 함께 사용할 수 있다. **주의할 점은 적용 순서인데, v-for 디렉티브가 먼저 수행되고 v-if 디렉티브가 적용된다.**    
 ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('서울') > -1">`` 
 
-<<<<<<< HEAD
-- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.
-=======
-- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.    [`<template>`으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
->>>>>>> 7cc681050fbc613929c688f005fab6513e8bfd6d
-
+- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.    
     - [`<template>`으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
     - `<template>`태그는 렌더링 내용에는 포함되지 않는다. 단지 요소들을 그룹으로 묶어주기 위한 용도로만 사용된다. 
 
