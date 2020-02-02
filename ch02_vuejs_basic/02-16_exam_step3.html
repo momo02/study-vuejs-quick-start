@@ -28,6 +28,7 @@
 <body>
     <div id="exmaple">
         <p>
+            <!-- 국가명을 입력할 필드는 v-model 디렉티브를 이용해 양방향 바인딩. -->
             국가명 : <input type="text" v-model="countryname" placeholder="국가명" />
         </p>
         <table id="list">
@@ -40,6 +41,7 @@
                 </tr>
             </thead>
             <tbody id="contacts">
+                <!-- 배열 데이터에 의해 반복할 tr요소를 v-for 디렉티브로 처리.-->
                 <tr v-for="c in filtered">
                     <td>{{c.no}}</td>
                     <td>{{c.name}}</td>
@@ -139,11 +141,17 @@
             el: "#exmaple",
             data: model,
             computed: {
+                /* 텍스트 필드에 입려한 값은 countryname에 즉시 반영되고, 국가 정보 리스트는 filtered 계산형 속성에 의해 필터링된 데이터만 나타나게 됨.
+                   cf) 배열의 filter 메서드 : 배열의 아이템 중 조건을 만족하는 아이템을 모아서 새로운 배열을 만들어 리턴하는 기능 수행.
+                       함수를 인자로 전달, 이 함수는 두개의 인자를 전달받는데 첫번째 인자가 배열의 item, 두번째 인자가 인덱스 번호.
+                */
                 filtered: function() {
+                    //cf. 여기서 this는 Vue객체이지만 콜백 함수 안쪽에서의 this는 전역 객체(Global Object. 브라우저 환경에선 window객체)를 참조하기에 
+                    //콜백함수 이전에 Vue 인스턴스의 데이터를 변수에 저장해 둔다.
                     var cname = this.countryname.trim();
                     return this.countries.filter(function(item, index) {
-                        if (item.name.indexOf(cname) > -1) {
-                            return true;
+                        if (item.name.indexOf(cname) > -1) { //indexOf 메서드를 이용해 문자열을 포함하고 있는 경우에만 true리턴. 
+                            return true; //true인 값들만 모아 새로운 배열을 만들어 리턴한다. 
                         }
                     });
                 }

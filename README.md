@@ -240,7 +240,16 @@ ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('�
      [v-once 디렉티브 사용 예](ch02_vuejs_basic/02-12_v-once_directive.html)
 
 ### 2.5 계산형 속성
-- 
+- 계산형 속성(Computed Property)은 화면으로 데이터 바인딩 시 **연산 로직**이 필요한 경우 사용.    
+Vue 객체를 만들 때 computed라는 속성과 함께 함수를 등록해두면 마치 속성처럼 이용할 수 있다.    
+     [computed property 사용 예](ch02_vuejs_basic/02-13_computed_property.html)
+
+### 디렉티브 활용 예제 
+ - [step1](ch02_vuejs_basic/02-14_exam_step1.html)
+ - [step2](ch02_vuejs_basic/02-15_exam_step2.html)
+ - [step3](ch02_vuejs_basic/02-16_exam_step3.html)
+ - [step3보완](ch02_vuejs_basic/02-17_exam_step4(using_keyup_event).html)
+
 
 *****
 ## 03 Vue 인스턴스

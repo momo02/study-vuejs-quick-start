@@ -25,7 +25,8 @@
                 sum: function() {
                     //함수 안에서 this는 Vue 객체 자신을 참조
                     //but 주의! 함수 내부에서 다른 콜백 함수를 실행하거나 했을 때는 this가 다른 값으로 연결될 수 있음.
-                    var n = Number(this.num); //Number() 함수나 parseInt() 함수를 이용해 명시적으로 숫자 값으로 변환.
+                    var n = Number(this.num);
+                    //HTML 요소 내부에서는 모두 문자열로 다뤄짐. Number() 함수나 parseInt() 함수를 이용해 명시적으로 숫자 값으로 변환.
                     if (Number.isNaN(n) || n < 1) return 0;
                     return ((1 + n) * n) / 2;
                 }
