@@ -45,7 +45,7 @@
             </thead>
             <tbody id="contacts">
                 <template v-for="(contact, index) in contacts">
-                <tr>
+                <tr :key="contact.no">
                     <td>{{index}}</td>
                     <td>{{contact.no}}</td>
                     <td>{{contact.name}}</td>

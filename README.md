@@ -198,21 +198,48 @@ Vue 엘리먼트에서 사용되는 특별한 속성으로, 엘리먼트에게 �
 ### 2.3 v-for 디렉티브 (반복 렌더링 디렉티브)
 - 반복적인 데이터를 렌더링하기 위해 **v-for** 디렉티브를 사용한다. 
 - v-for의 구문은 원본 데이터가 어떤 형식인가에 따라 사용 방법이 달라진다.
-    - 데이터가 배열일 경우 v-for 디렉티브 사용 예 : `<tr v-for="(contact, index) in contacts"> ... </tr>`   
+    - 데이터가 배열일 경우 v-for 디렉티브 사용 예 :   
+     `<tr v-for="(contact, index) in contacts"> ... </tr>`   
     [예제 소스](ch02_vuejs_basic/02-08_v-for_directive_for_array_type_data.html)
-    - 데이터가 객체일 경우 v-for 디렉티브 사용 예 : `<option v-for="(val, key, index) in regions"> ... <option>`   
+    - 데이터가 객체일 경우 v-for 디렉티브 사용 예 :   
+     `<option v-for="(val, key, index) in regions"> ... <option>`   
     [예제 소스](ch02_vuejs_basic/02-09_v-for_directive_for_object_type_data.html)
 - v-for 디렉티브와 v-if 디렉티브는 함께 사용할 수 있다. **주의할 점은 적용 순서인데, v-for 디렉티브가 먼저 수행되고 v-if 디렉티브가 적용된다.**    
 ex) ``<tr v-for="(contact, index) in contacts" v-if="contact.address.indexOf('서울') > -1">`` 
 
-- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.    [<template>으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
+- 여러 HTML요소의 그룹을 반복 렌더링 하려면 `<template>`태그를 사용한다.
 
+    - [`<template>`으로 여러 개의 요소를 묶어 반복 렌더링 예](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
+    - `<template>`태그는 렌더링 내용에는 포함되지 않는다. 단지 요소들을 그룹으로 묶어주기 위한 용도로만 사용된다. 
+
+- Vue.js의 가상 DOM(Virtual DOM)은 렌더링 속도를 빠르게 하기 위해 변경된 부분만 업데이트한다. v-for로 렌더링한 배열 데이터의 순서가 변경되면 DOM 요소(HTML DOM Element) 를 이동시키지 않고 기존 DOM 요소의 데이터를 변경한다.   
+만일 DOM 요소를 추적해 DOM 요소의 위치를 직접 변경하고자 한다면, DOM요소에 v-bind 디렉티브를 이용해 Key 특성(Attribute)에 고유한 값을 부여하면 된다. 데이터베이스를 조회하여 얻어낸 결과를 렌더링하는 경우라면 key 특성에 기본키(Primary Key)값을 바인딩.
+
+    - [예제](ch02_vuejs_basic/02-10_v-for_directive_with_template_for_multi_element.html)
+
+- **배열 데이터의 변경에 관한 문제점**
+    - 배열 데이터가 변경될 때 추적이 되지 않는 작업이 있으므로 주의 필요.
+    배열 데이터를 인덱스 번호를 이용해 직접 변경하는 경우 
+    위 예제를 실행하고 콘솔 창에서 아래와 같이 배열 값을 변경해도 변화 없음.   
+    ex) `` list.contacts[0] = { no:100, name:"태연", tel:"010-1234-5678", address:"제주" }; ``
+
+    - 반면 각 배열 값 내부의 속성을 직접 변경하는 것은 Vue인스턴스 내부의 감시자(Watcher가 추적해내기 때문에 화면이 즉시 변경됨.  
+    ex) `list.contacts[1].name = "태연" `
+
+    - 기존의 배열 값을 직접 변경하기위해서는 Vue.set메서드를 사용해 변경해야한다.
+    ex) `Vue.set(list.contacts, 0, {no: 100, name: "태연", tel: "010-3456-8299", address: "인천"})`
+
+    - v-for 디렉티브는 push, pop, shif, unshift, splice, filter, contact, slice, reduce... 등과 같은 자바스크립트 배열 객체가 지원하는 메서드가 호출되면 감시자를 통해 변경 추적 가능하므로 가능하면 이러한 메서드들을 이용해 변경하는 것이 좋다.  
 
 
 ### 2.4 기타 디렉티브
+- v-pre 디렉티브 : HTML 요소에 대한 컴파일을 수행하지 않는다.   
+     [v-pre_directive 사용 예](ch02_vuejs_basic/02-11_v-pre_directive.html)
+- v-once 디렉티브 : HTML 요소를 **단 한번만 렌더링**하도록 설정한다. 초깃값이 주어지면 변경되지 않는 UI를 만들 때 사용할 수 있다.   
+     [v-once 디렉티브 사용 예](ch02_vuejs_basic/02-12_v-once_directive.html)
 
 ### 2.5 계산형 속성
-
+- 
 
 *****
 ## 03 Vue 인스턴스
