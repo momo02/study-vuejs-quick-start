@@ -254,10 +254,66 @@ Vue 객체를 만들 때 computed라는 속성과 함께 함수를 등록해두�
 *****
 ## 03 Vue 인스턴스
 ----------------------
+- var app = new Vue({ ... })와 같이 Vue 생성자로 만든 객체를 **vue 인스턴스**라고 부른다.
+때로는 뷰모델(ViewModel)을 의미하는 vm을 삽입해 vue vm 인스턴스라고도 한다.   
+Vue 인스턴스를 생성할 때 전달하는 속성들을 담은 객체를 **옵션(options) 객체**라고 한다.
+    - var clist = new Vue(**{    
+            el: "#exmaple",   
+            data: model,   
+            computed: { ... }
+        }**);    
+        -> 볼드체로 표현된 부분이 옵션 객체.
+
 
 ### 3.1 el, data, computed 옵션 
+- data 옵션 
+    - data옵션에 주어진 모든 속성들은 Vue 인스턴스 내부에서 직접 이용되지 않고 Vue 인스턴스와 Data 옵션에 주어진 객체 사이에 **프록시**를 두어 처리.
+
+    - data 옵션은 Vue 인스턴스가 관할하는 데이터 객체를 의미하므로 변경 사항은 즉시 감지된다. 
+
+    - [예제03-01](ch03_vue_instance/03-01_el_data_option.html)
+     ![예제 03-01 실행 결과](/readmeImg/ch03_01.PNG "예제 03-01 실행 결과")
+    
+        - data 옵션값이 Vue 인스턴스에 의해 프록시 처리되어 vm.name과 같이 사용할 수 있다. 직접 data옵션을 통해 접근하고 싶다면 vm.$data.name과 같이 접근할 수 있다. 내장 옵션들은 모두 $식별자를 앞에 붙이고 있는데 이름 충돌을 피하기 위한 것. 
+
+- el 옵션 
+    - el 옵션은 Vue 인스턴스에 연결할 HTML DOM 요소를 지정. **주의할 점은 여러개 요소에 지정할 수 없다는 것.** '.test'와 같이 CSS 클래스 선택자를 사용해도 여러 개의 요소 중 첫 번째 요소에만 연결된다.
+
+    - 실행 도중 동적으로 Vue인스턴스와 HTML요소를 연결할 수 있지만( vm.$mount('#test')와 같이 $mount()를 이용해 동적으로 연결 가능), el 옵션은 Vue인스턴스를 생성할 때 미리 지정할 것을 권장. 어차피 Vue 인스턴스가 HTML요소와 연결되면 도중에 연결된 요소를 변경할 수 없기 때문.
+
+- computed 옵션 
+    - computed 옵션에서 지정한 값은 함수이지만 Vue인스턴스는 프록시 처리 하여 마치 속성처럼 취급. 
+        - [예제03-02](ch03_vue_instance/03-02_computed_option.html)
+        ![예제 03-02 실행 결과](/readmeImg/ch03_02.PNG "예제 03-02 실행 결과")
+
+        - vmSum.sum으로 속성 접근 방식을 사용했을 때 정상 실행. 이러한 이유로 계산형 속성(Computed Property)라 함. Vue 인스턴스의 모든 옵션 정보를 다루는 $options 속성을 이용해 실제 함수를 확인할 수도 있음.
+
+    - 계산형 속성에 set메서드를 지정하면 쓰기 작업도 가능. 
+    - [계산형 속성의 getter/setter 메서드 예](ch03_vue_instance/03-03_computed_option_getter_setter.html)
+    ![예제 03-03 실행 결과](/readmeImg/ch03_03.PNG "예제 03-03 실행 결과")
+
+   
 ### 3.2 메서드 
+- methods 옵션은 Vue 인스턴스에서 사용할 메서드를 등록하는 옵션. 등록된 메서드는 Vue 인스턴스를 이용해 직접 호출할 수도 있고, 디렉티브 표현식, 콧수염(Mustache) 표현식에서도 사용할 수 있다. 
+
+- [예제03-04 : 예제03-02를 메서드 사용으로 변경](ch03_vue_instance/03-04_methods_option.html)
+
+- **computed property(계산형 속성)와 비교**   
+    계산형 속성은 종속된 값에 의해 결과 값이 캐싱된다. 
+    콘솔창에 vmSum.sum_computed / vmSum.sum_methods() 입력해보면 
+    계산형 속성인 sum_computed 는 캐싱된 결과값을 바로 리턴하고 
+    메서드인 sum_methods() 는 매번 메서드를 실행하여 현재 날짜를 입력한 콘솔 내용이 찍힌다. 
+    ==> methods를 사용할 것인지 computed를 사용할 것인지 결정할 때의 고려사항 중 하나가 `캐싱 여부`이다.
+
+- **메서드 작성 시 주의할 점** : `ECMAScript6가 제공하는 화살표 함수(Arrow Function)는 사용해서는 안 된다.` 화살표 함수 내부에서는 this가 Vue 인스턴스를 가리키지 않고, 전역 객체(Global Object:브라우저 환경에선 Windows객체)를 가리키기 때문. 일반적으로 메서드 내부에서 데이터 속성들을 이용하기 때문에 this가 바뀌게 되면 Vue 인스턴스 내부 데이터에 접근할 수 없게 됨. 
+
+
 ### 3.3 관찰 속성
+- vue.js에서 하나의 데이터를 기반으로 다른 데이터를 변경할 필요가 있을 때 흔히 계산형 속성을 사용하지만, **긴 처리 시간이 필요한 비동기 처리**에는 주로 관찰 속성(Watched Property)을 사용한다.
+- [watch option 사용 예](ch03_vue_instance/03-05_watch_option_for_sum_exam.html)
+
+
+
 ### 3.4 v-cloak 디렉티브
 ### 3.5 Vue 인스턴스 라이프 사이클 
 
